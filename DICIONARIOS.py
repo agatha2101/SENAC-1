@@ -1,7 +1,7 @@
 aluna = {"id": 1, "nome": "Caroline", "nota": 9.2}
 pessoa = {"nome": "Ana", "idade": 25}
 
-print("NOme da pessoa:", pessoa["nome"])
+print("Nome da pessoa:", pessoa["nome"])
 
 pessoa["cidade"] = "FLorianópolis"
 pessoa["idade"] = 26
@@ -14,7 +14,7 @@ print("Após pop('idade'):", pessoa)
 
 print("Quantidade de chaves em 'aluna':", len(aluna))
 
-print("Chaves de 'aluna':", list(aluna.keys()))
+print("Chaves de 'aluna':", list(aluna.keys()))  
 print("Valores de 'aluna':", list(aluna.values()))
 print("Itens de 'aluna':", list(aluna.items()))
 
