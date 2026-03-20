@@ -26,4 +26,4 @@ aluna.update({"nota": 9.5, "turma": "A"})
 print("Aluna após update:", aluna)
 
 for chave, valor in aluna.items():
-    print(f"{chave} -> {valor}")
+    print(f"{chave} -> {valor}") 
