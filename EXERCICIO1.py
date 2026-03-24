@@ -57,28 +57,49 @@ nota3 = float(input("Digite a terceira nota: "))
 
 lista = [nota1, nota2, nota3]
 
-soma = nota1 + nota2 + nota3
-soma /= 3
+soma = sum(lista) / len(lista)
 
 print("Essa é a sua média:", soma)
-print("Menor nota é: ", min(lista))
+print("Menor nota é:", min(lista))
 
 novaNota = float(input("Digite uma nova nota para a substituição da menor: "))
 
-lista = novaNota.index(min(lista))
+indice = lista.index(min(lista))
+
+lista[indice] = novaNota
 
 lista.sort()
-soma = nota1 + nota2 + nota3
-soma /= 3
 
-novaMedia = soma
-print("Sua nova média é: ", novaMedia)
+novaMedia = sum(lista) / len(lista)
+
+print("Lista ordenada:", lista)
+print("Sua nova média é:", novaMedia)
 
 # 5 [LIST - desafio] Fila: chegadas, prioridade e atendimento
 # Tarefa: Inicie fila = ["Ana", "Bruno"]. Leia dois nomes e adicione (use extend). Leia um cliente prioritário e insira na posição 1. Atenda (remova e capture) o primeiro com pop(0). Exiba a fila a cada etapa.
 # Use: input(), extend(), insert(), pop(), print()
 # Tipos: str, list.
 # Conceitos: estrutura de fila, operações de inserção/remoção, ordem.
+
+fila = ["Ana", "Bruno"]
+
+print("Fila inicial:", fila)
+
+nome1 = input("Digite um nome: ")
+nome2 = input("Digite outro nome: ")
+
+fila.extend([nome1, nome2])
+print("Após chegadas:", fila)
+
+prioritario = input("Digite o nome do cliente prioritário: ")
+
+fila.insert(1, prioritario)
+print("Após prioridade:", fila)
+
+atendido = fila.pop(0)
+print("Atendido:", atendido)
+
+print("Fila final:", fila)
 
 # 6 [DICT] Criar e exibir dicionário de aluno
 # Tarefa: Leia nome e idade. Crie aluno = {"nome": ..., "idade": ...} e exiba o dicionário e seu tipo.
@@ -171,32 +192,149 @@ print(total)
 # Exibir a lista ordenada de nomes de contatos
 # Tipos: str, dict, list (para a lista ordenada, se desejar armazenar).Conceitos: CRUD em dicionários, teste de existência, ordenação de chaves.Use: input(), acesso/atribuição agenda[nome] = tel, in, pop(), sorted(agenda.keys()), print()
 
-nome = input("Digite o nome do produto: ")
-contato = int(input("Digite seu numero: "))
-
-
-agenda {
-    "nome": nome,
-    "contato": contato
+agenda = {
+    "Ana": "1111-1111",
+    "Bruno": "2222-2222"
 }
 
-print(agenda)
+print("Agenda inicial:", agenda)
 
-agenda["nome"] = "Ana"
-agenda["contato"] = 111-222 
+nome = input("Digite o nome para adicionar: ")
+tel = input("Digite o telefone: ")
 
-print(agenda)
+agenda[nome] = tel
+print("Após adicionar:", agenda)
 
-agenda.update({"contato": 111-555 })
-print("Agenda após update:", agenda)
+nome = input("Digite o nome para atualizar: ")
+tel = input("Digite o novo telefone: ")
 
-removido = nome.pop("nome")
+agenda[nome] = tel
+print("Após atualizar:", agenda)
 
-print(agenda)
+nome = input("Digite o nome para remover: ")
 
+removido = agenda.pop(nome)
+print("Removido:", removido)
+print("Após remover:", agenda)
 
+ordenados = sorted(agenda.keys())
+print("Nomes ordenados:", ordenados)
 
+# 11 [TUPLE] Criar e exibir uma tupla simples
+# Tarefa: Leia dois nomes do usuário e coloque-os em uma tupla. Depois exiba a tupla e o tipo dela.
+# Orientações: 
+# usar input(), print(), type()
+# usar tupla no formato (valor1, valor2)
+# tipo trabalhado: str, tuple
 
+nome1 = input("Digite o seu nome: ")
+nome2 = input("Digite o seu nome: ")
 
+nomes = (nome1, nome2)
 
+print(nomes)
 
+print(type(nomes))
+
+# 12 [TUPLE] Acessar elementos da tupla
+# Tarefa: Leia três frutas e coloque em uma tupla. Depois leia uma fruta e diga se ela está ou não na tupla.
+#  Orientações: 
+# usar in
+# usar input()
+# tipo: str, tuple
+# conceito: operador de pertinência
+
+fruta1 = input("Digite o nome da fruta: ")
+fruta2 = input("Digite o nome da fruta: ")
+fruta3 = input("Digite o nome da fruta: ")
+ 
+frutas = (fruta1, fruta2, fruta3)
+
+print("Tem 'maça'?", "maça" in frutas)
+print(frutas)
+
+# 13 [TUPLE] Contar quantas vezes um número aparece
+# Tarefa: Leia quatro números inteiros e crie uma tupla. Depois leia um número e diga quantas vezes ele aparece na tupla.
+# Orientações: 
+# método: tuple.count()
+# tipos: int, tuple
+
+n1 = int(input("Digite o número: "))
+n2 = int(input("Digite o número: "))
+n3 = int(input("Digite o número: "))
+n4 = int(input("Digite o número: "))
+
+numeros = (n1, n2, n3, n4)
+
+numeroscount = numeros.count(2)
+print(numeroscount)
+print(numeros)
+
+# 14 [TUPLE] Exibir maior e menor valor
+# Tarefa: Leia quatro números inteiros, coloque em uma tupla e exiba o maior e o menor.
+#  Orientações: 
+# funções: max(), min()
+# tipos: int, tuple
+# conceito: operações básicas de agregação
+
+n1 = int(input("Digite o número: "))
+n2 = int(input("Digite o número: "))
+n3 = int(input("Digite o número: "))
+n4 = int(input("Digite o número: "))
+
+numeros = (n1, n2, n3, n4)
+print(numeros)
+
+print(max(numeros))
+print(min(numeros))
+
+# 15 [TUPLE] Dias da semana com tuplas
+
+coordenadas = (10,20)
+dias = ("segunda", "terça", "quarta", "quinta", "sexta")
+
+print(dias)
+
+print("Primeiro dia:", dias[0])
+print("Ultimo dia:", dias[-1])
+print("Tamanho da tupla 'dias':", len(dias))
+
+print(dias)
+
+# 16 [TUPLE - desafio] Tupla de notas com média (sem alterar a tupla)
+# Tarefa: Leia três notas (float) e armazene em uma tupla. Exiba a tupla e a média das notas.
+#  Use: float(), sum(), len(), print()
+#  Sem alterar tupla.
+
+n1 = float(input("Digite a nota: "))
+n2 = float(input("Digite a nota: "))
+n3 = float(input("Digite a nota: "))
+
+notas = (n1, n2, n3)
+
+print("Suas notas: ", notas)
+
+soma = n1 + n2 + n3
+soma / 3 
+
+print(soma)
+
+# 17 [TUPLE - desafio] Organizar valores sem mexer na tupla original
+# Tarefa: Leia quatro números em uma tupla e exiba: 
+# a tupla original
+# uma lista ordenada apenas para visualizaçã
+# o tipo da variável ordenada
+# Objetivo: mostrar diferença entre tupla e lista sem precisar modificar nada.Use: sorted(), print(), type()
+
+n1 = int(input("Digite o número: "))
+n2 = int(input("Digite o número: "))
+n3 = int(input("Digite o número: "))
+n4 = int(input("Digite o número: "))
+
+numeros = (n1, n2, n3, n4) 
+print(numeros)
+
+ordenados = sorted(numeros)
+print("Lista ordenada:", ordenados)
+
+print("Tipo da variável ordenada:", type(ordenados))
