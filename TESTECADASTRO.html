@@ -1,0 +1,287 @@
+
+
+<!-- Não permite a mesma foto em cadastros diferentes.
+A foto sai apos a edição dos dados -->
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Cadastro | Cliente | CM</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body style="background-color: #f4f4f4;">
+
+<header style="margin: 0 auto; width: auto;">
+
+    <nav style="background-color: #0e365e" class="navbar navbar-dark">
+        <a class="navbar-brand" href="#">| Cadastro </a>
+    </nav>
+
+</header>
+
+<div style="margin: 40px;" class="container mt-5">
+
+    <h1>Seja bem-vindo!</h1>
+
+    <p>Cadastre os dados do cliente abaixo.</p>
+
+    <button
+        onclick="window.location.href='TESTECLIENTES.html'"
+        class="btn btn-primary"
+        style="background-color:#0e365e;
+        border-color:#0e365e;">
+        Área dos Clientes
+    </button>
+
+
+</div>
+
+<main>
+
+<form id="formulario-adicionar">
+
+    <input id="nome"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px;"
+    required type="text"
+    placeholder="Nome"
+    class="form-control">
+
+    <input id="cpf"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px;"
+    type="number"
+    placeholder="CPF"
+    class="form-control mt-2">
+
+    <input id="email"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px;"
+    type="email"
+    placeholder="E-mail"
+    class="form-control mt-2">
+
+    <input id="marinha"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px;"
+    type="text"
+    placeholder="Marinha"
+    class="form-control mt-2">
+
+    <input id="barco"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px;"
+    type="text"
+    placeholder="Barco"
+    class="form-control mt-2">
+
+    <input id="descricao"
+    style="width: 1200px; margin: 50px; margin-bottom: 5px; height: 60px;"
+    type="text"
+    placeholder="Descrição do problema"
+    class="form-control mt-3">
+
+    <input id="imagem"
+    style="margin: 50px; margin-bottom: -10px; display: block;"
+    type="file"
+    multiple
+    accept="image/*">
+
+    <div id="preview"
+    style="margin: 10px 50px; display: flex; gap: 10px; flex-wrap: wrap;">
+    </div>
+
+    <button type="submit"
+    style="box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color:#0e365e;
+    border-color:#0e365e;
+    margin:50px;
+    width:150px;"
+    class="btn btn-primary">
+        Cadastrar
+    </button>
+
+</form>
+
+</main>
+
+<script>
+let editandoIndex = -1;
+
+let imagensAntigas = [];
+
+$("#formulario-adicionar").submit(async function(event){
+
+    event.preventDefault();
+
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    let imagens = [];
+
+    const files = $('#imagem')[0].files;
+
+    let leitores = [];
+
+    Array.from(files).forEach(file => {
+
+        let reader = new FileReader();
+
+        leitores.push(
+
+            new Promise(resolve => {
+
+                reader.onload = function(e){
+
+                    imagens.push(e.target.result);
+
+                    resolve();
+
+                };
+
+                reader.readAsDataURL(file);
+
+            })
+
+        );
+
+    });
+
+    await Promise.all(leitores);
+
+    if(imagens.length === 0){
+
+        imagens = imagensAntigas;
+
+    }
+
+    let novoCliente = {
+
+        nome: $('#nome').val(),
+        cpf: $('#cpf').val(),
+        email: $('#email').val(),
+        marinha: $('#marinha').val(),
+        barco: $('#barco').val(),
+        descricao: $('#descricao').val(),
+        imagens: imagens
+
+    };
+
+    if(editandoIndex === -1){
+
+        clientes.push(novoCliente);
+
+    } else {
+
+        clientes[editandoIndex] = novoCliente;
+
+        editandoIndex = -1;
+
+    }
+
+    localStorage.setItem("clientes", JSON.stringify(clientes));
+
+    window.location.href = "TESTECLIENTES.html";
+
+});
+
+function editarCliente(index){
+
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    let cliente = clientes[index];
+
+    $('#nome').val(cliente.nome);
+    $('#cpf').val(cliente.cpf);
+    $('#email').val(cliente.email);
+    $('#marinha').val(cliente.marinha);
+    $('#barco').val(cliente.barco);
+    $('#descricao').val(cliente.descricao);
+
+    editandoIndex = index;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+}
+
+$('#imagem').on('change', function(){
+
+    const container = document.getElementById("preview");
+
+    container.innerHTML = "";
+
+    Array.from(this.files).forEach(file => {
+
+        const img = document.createElement("img");
+
+        img.src = URL.createObjectURL(file);
+
+        img.style.width = "70px";
+        img.style.height = "70px";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "6px";
+
+        container.appendChild(img);
+
+    });
+
+});
+
+let clienteEditando = localStorage.getItem("editandoCliente");
+
+if(clienteEditando !== null){
+
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+
+    let cliente = clientes[clienteEditando];
+
+    $('#nome').val(cliente.nome);
+    $('#cpf').val(cliente.cpf);
+    $('#email').val(cliente.email);
+    $('#marinha').val(cliente.marinha);
+    $('#barco').val(cliente.barco);
+    $('#descricao').val(cliente.descricao);
+
+    editandoIndex = clienteEditando;
+
+    localStorage.removeItem("editandoCliente");
+
+    imagensAntigas = cliente.imagens;
+
+    const container = document.getElementById("preview");
+
+    container.innerHTML = "";
+
+    cliente.imagens.forEach(imagem => {
+
+        const img = document.createElement("img");
+
+        img.src = imagem;
+
+        img.style.width = "70px";
+        img.style.height = "70px";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "6px";
+
+        container.appendChild(img);
+
+    });
+
+    editandoIndex = clienteEditando;
+
+    localStorage.removeItem("editandoCliente");
+
+}
+
+
+
+</script>
+</body>
+</html>
