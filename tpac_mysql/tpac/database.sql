@@ -3,11 +3,11 @@
 -- Execute este arquivo no MySQL Workbench antes de rodar o Python.
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS tpac_db
+CREATE DATABASE IF NOT EXISTS tea_db
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE tpac_db;
+USE tea_db;
 
 -- Remove as tabelas antigas, caso você esteja recriando o banco.
 DROP TABLE IF EXISTS passos;
@@ -34,15 +34,17 @@ CREATE TABLE tarefas (
     usuario_id INT NOT NULL,
     tipo ENUM('tarefas_diarias', 'tarefas_educacionais') NOT NULL,
     titulo VARCHAR(200) NOT NULL,
+    descricao TEXT NULL, 
+    prioridade ENUM('baixa', 'media', 'alta') NOT NULL DEFAULT 'media',
+    prazo DATE NULL,
     concluida BOOLEAN NOT NULL DEFAULT FALSE,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_tarefas_usuario
         FOREIGN KEY (usuario_id)
-        REFERENCES usuarios(id)
+        REFERENCES usuario(id)
         ON DELETE CASCADE
 );
-
 -- ============================================================
 -- TABELA DE PASSOS
 -- Guarda os passos gerados pela IA para cada tarefa.
@@ -53,6 +55,7 @@ CREATE TABLE passos (
     texto TEXT NOT NULL,
     concluido BOOLEAN NOT NULL DEFAULT FALSE,
     ordem INT NOT NULL DEFAULT 1,
+
 
     CONSTRAINT fk_passos_tarefa
         FOREIGN KEY (tarefa_id)

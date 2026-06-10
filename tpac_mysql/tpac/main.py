@@ -2,10 +2,34 @@ from data.data_manager import carregar_dados
 from ui.menus import criar_usuario_menu, painel_principal_menu
 from ui.utils import exibir_cabecalho
 
+def exibir_logo():
+
+    print("""
+    ╔══════════════════════════════════════════════════╗
+    ║                                                  ║
+    ║   ██╗ █████╗ ███╗   ███╗██╗ ██████╗  ██████╗     ║
+    ║   ██║██╔══██╗████╗ ████║██║██╔════╝ ██╔═══██╗    ║
+    ║   ██║███████║██╔████╔██║██║██║  ███╗██║   ██║    ║
+    ║   ██║██╔══██║██║╚██╔╝██║██║██║   ██║██║   ██║    ║
+    ║   ██║██║  ██║██║ ╚═╝ ██║██║╚██████╔╝╚██████╔╝    ║
+    ║   ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝ ╚═════╝  ╚═════╝     ║
+    ║                                                  ║
+    ║   Seu amigo para organizar tarefas e estudos     ║
+    ║                                                  ║
+    ║       Desenvolvido para auxiliar pessoas         ║
+    ║            com dificuldades de foco              ║
+    ║                                                  ║
+    ╚══════════════════════════════════════════════════╝
+    """)
+
 def executar_sistema():
     while True:
         dados = carregar_dados()
-        exibir_cabecalho("IAmigo - Sistema de apoio para pessoas com TDAH")
+
+        exibir_logo()  
+
+        print("Olá! 👋 Eu sou o IAmigo.")
+        print("Vamos organizar suas tarefas juntos.\n")
         print("1. Entrar com seu perfil")
         print("2. Criar um novo perfil")
         print("3. Encerrar")
