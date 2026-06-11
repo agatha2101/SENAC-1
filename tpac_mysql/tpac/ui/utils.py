@@ -10,6 +10,6 @@ def exibir_cabecalho(titulo: str):
     print("=" * 60 + "\n")
 
 def exibir_barra_status(usuario):
-    print("╔══════════════════════════════════════════════════════╗")
-    print(f"║ 👤 Usuário: {usuario:<15} 🤖 IAmigo Online      ║")
-    print("╚══════════════════════════════════════════════════════╝")
+    print(" ╔══════════════════════════════════════════════════════╗")
+    print(f"║ 👤 Usuário: {usuario:<15}   🤖 IAmigo Online        ║")
+    print(" ╚══════════════════════════════════════════════════════╝")
