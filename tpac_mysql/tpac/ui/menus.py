@@ -89,6 +89,7 @@ def painel_ia_menu(dados: dict, usuario: str):
 def painel_principal_menu(dados: dict, usuario: str):
     while True:
         exibir_cabecalho(f"PAINEL DO USUÁRIO: {usuario}")
+        exibir_barra_status(usuario)
         print("1. O que vamos fazer hoje?😊\n2. Atividades Educacionais\n3. 🤖 Central de IA\n4. Logout")
         opcao = input("\nEscolha: ").strip()
         if opcao == "1":
