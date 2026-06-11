@@ -88,15 +88,34 @@ def painel_ia_menu(dados: dict, usuario: str):
 
 def painel_principal_menu(dados: dict, usuario: str):
     while True:
-        exibir_cabecalho(f"PAINEL DO USUÁRIO: {usuario}")
+        exibir_cabecalho("PAINEL DO USUÁRIO:")
         exibir_barra_status(usuario)
-        print("1. O que vamos fazer hoje?😊\n2. Atividades Educacionais\n3. 🤖 Central de IA\n4. Logout")
-        opcao = input("\nEscolha: ").strip()
+
+        print("""
+        ╔════════════════════════════════════╗
+        ║      COMO POSSO TE AJUDAR?         ║
+        ╠════════════════════════════════════╣
+        ║ 1. 📝 Organizar minhas tarefas     ║
+        ║ 2. 📚 Planejar meus estudos        ║
+        ║ 3. 🤖 Conversar com o IAmigo       ║
+        ║ 4. 👋 Encerrar por agora           ║
+        ╚════════════════════════════════════╝
+        """)
+        
+        opcao = input("\n➜ Escolha uma opção: ").strip()
         if opcao == "1":
+            print("\n🤖 Vamos colocar suas tarefas em ordem!")
+            input("\nPressione ENTER para continuar...")
             gerenciar_tarefas_menu(dados, usuario, "tarefas_diarias", "ROTINA DIÁRIA")
         elif opcao == "2":
+            print("\n🤖 Ótimo! Vamos focar nos estudos.")
+            input("\nPressione ENTER para continuar...")
             gerenciar_tarefas_menu(dados, usuario, "tarefas_educacionais", "ESTUDOS E EDUCAÇÃO")
         elif opcao == "3":
+            print("\n🤖 Estou pronto para conversar com você!")
+            input("\nPressione ENTER para continuar...")
             painel_ia_menu(dados, usuario)
         elif opcao == "4":
+            print("\n🤖 Foi muito bom conversar com você hoje.")
+            print("👋 Até a próxima!")
             break
