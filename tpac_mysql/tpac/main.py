@@ -30,6 +30,7 @@ def executar_sistema():
 
         print("Olá! 👋 Eu sou o IAmigo.")
         print("Vamos organizar suas tarefas juntos.\n")
+        
         print("1. Entrar com seu perfil")
         print("2. Criar um novo perfil")
         print("3. Encerrar")
