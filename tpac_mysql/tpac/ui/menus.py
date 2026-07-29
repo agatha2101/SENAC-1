@@ -1,4 +1,4 @@
-from ui.utils import exibir_cabecalho
+from ui.utils import exibir_cabecalho, exibir_barra_status, exibir_progresso
 from data.data_manager import carregar_dados, salvar_dados
 import core.tarefas as core_tarefas
 import core.ia_service as ia_service
@@ -33,23 +33,54 @@ def gerenciar_tarefas_menu(dados: dict, usuario: str, chave: str, titulo: str):
     while True:
         exibir_cabecalho(titulo)
         tarefas = dados[usuario][chave]
+        exibir_progresso(tarefas)
         
         if not tarefas:
-            print("[Nenhuma tarefa pendente.]")
+            print("""
+            ╔════════════════════════════════════╗
+            ║        🎉 TUDO EM DIA!             ║
+            ╠════════════════════════════════════╣
+            ║ Nenhuma tarefa pendente por aqui.  ║
+            ╚════════════════════════════════════╝
+            """)
         else:
+            print("\n📋 SUAS ATIVIDADES:\n")
+
             for idx, t in enumerate(tarefas, 1):
-                status = "[X]" if t["concluida"] else "[ ]"
+                status = "✅" if t["concluida"] else "⏳"
+
                 print(f"{idx}. {status} {t['titulo']}")
+
                 for p in t.get("passos", []):
-                    print(f"   ○ {p['texto']}")
+                    print(f"    └─ 📌 {p['texto']}")
+
+                print()
 
         print("\n" + "-"*30)
-        print("1. Criar Tarefa | 2. Alternar Status | 3. 🤖 Desmembrar com IA | 4. Voltar")
+        print("  ╔════════════════════════════════════════════════════════════════════╗")
+        print("     ➊ 📝 Adicionar │  ➋ ✅ Concluir │  ➌ 🤖 IA │  ➍ 🔙 Voltar      ")
+        print("  ╚════════════════════════════════════════════════════════════════════╝")
         opcao = input("\nEscolha uma opção: ").strip()
 
         if opcao == "1":
-            t_nome = input("Nome da tarefa: ").strip()
-            if t_nome: core_ref = core_tarefas.adicionar_tarefa(dados, usuario, chave, t_nome)
+            print("\n🤖 Certo! Vamos criar uma nova atividade.")
+            t_nome = input("➜ O que você precisa fazer hoje? ").strip()
+            if t_nome:
+                core_tarefas.adicionar_tarefa(dados, usuario, chave, t_nome)
+                import random
+
+                mensagens = [
+                    "🌟 Excelente! Já anotei isso.",
+                    "🚀 Um passo de cada vez!",
+                    "📌 Atividade adicionada com sucesso.",
+                    "💙 Pode deixar, está tudo anotado.",
+                    "🎯 Agora ficou mais fácil lembrar."
+                ]
+
+                print(f"\n{random.choice(mensagens)}")
+                print(f"📌 {t_nome}")
+
+                input("\nPressione ENTER para continuar...")
         elif opcao == "2" and tarefas:
             try:
                 idx = int(input("Número da tarefa: ")) - 1
@@ -69,22 +100,42 @@ def gerenciar_tarefas_menu(dados: dict, usuario: str, chave: str, titulo: str):
             break
 
 def painel_ia_menu(dados: dict, usuario: str):
-    exibir_cabecalho("ASSISTENTE DE IA PARA TPAC")
+    exibir_cabecalho("🤖 IAMIGO")
+    print("""
+            ╔════════════════════════════════════╗
+            ║        CONVERSA COM IAMIGO         ║
+            ╠════════════════════════════════════╣
+            ║  Pode me perguntar qualquer coisa! ║
+            ╚════════════════════════════════════╝
+            """)
     print("Peça ajuda para simplificar enunciados, organizar rotinas ou tirar dúvidas.")
     print("Digite 'sair' para retornar.\n")
     estilo = dados[usuario]["preferencias"]["estilo_instrucao"]
 
     while True:
         pergunta = input("\nVocê: ").strip()
-        if pergunta.lower() == 'sair': break
+        if pergunta.lower() == 'sair':
+            print("\n👋 Até a próxima!")
+            break
         if not pergunta: continue
+        
+        import random
+        
+        frases = [
+            "🤔 Estou pensando...",
+            "🧠 Analisando sua pergunta...",
+            "📚 Organizando a resposta...",
+            "💡 Tenho uma ideia!",
+            "🎯 Vamos simplificar isso..."
+        ]
 
-        print("\n🤖 Processando sem ambiguidades...")
+        print(f"\n{random.choice(frases)}")
+
         respostas = ia_service.obter_resposta_ia(pergunta, estilo)
-        print(f"\n[Assistente - Modo {estilo.upper()}]:")
+        print("\n🤖 IAmigo:")
         for linha in respostas:
             print(f"- {linha}")
-        print("-" * 30)
+        print("\n════════════════════════════════════")
 
 def painel_principal_menu(dados: dict, usuario: str):
     while True:
@@ -101,8 +152,7 @@ def painel_principal_menu(dados: dict, usuario: str):
         ║ 4. 👋 Encerrar por agora           ║
         ╚════════════════════════════════════╝
         """)
-        
-        opcao = input("\n➜ Escolha uma opção: ").strip()
+        opcao = input("\nEscolha: ").strip()
         if opcao == "1":
             print("\n🤖 Vamos colocar suas tarefas em ordem!")
             input("\nPressione ENTER para continuar...")
