@@ -54,6 +54,7 @@ function renderizarChamados() {
             <p><strong>Descrição:</strong> ${chamado.descricao}</p>
             <p><strong>Status:</strong> ${chamado.status}</p>
             <button onclick="avancarStatus(${chamado.id})">Avançar status</button>
+            <button onclick="editarChamado(${chamado.id})">Editar</button>
         </div>
     `).join("");
 }
@@ -69,6 +70,30 @@ function avancarStatus(id) {
     } else if (chamado.status === "Concluído") {
         chamado.status = "Concluído";
     }
+
+    salvarChamados();
+    renderizarChamados();
+}
+
+function editarChamado(id) {
+    const chamado = chamados.find(chamado => chamado.id === id);
+
+    if (!chamado) return;
+
+    const novoTitulo = prompt("Digite o novo título:", chamado.titulo);
+    const novaDescricao = prompt("Digite a nova descrição:", chamado.descricao);
+
+    if (novoTitulo === null || novaDescricao === null) {
+        return;
+    }
+
+    if (novoTitulo.trim() === "" || novaDescricao.trim() === "") {
+        alert("Título e descrição não podem ficar vazios.");
+        return;
+    }
+
+    chamado.titulo = novoTitulo.trim();
+    chamado.descricao = novaDescricao.trim();
 
     salvarChamados();
     renderizarChamados();
